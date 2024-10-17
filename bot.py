@@ -16,4 +16,11 @@ async def on_ready():
     channel = bot.get_channel(CHANNEL_ID)
     await channel.send("Hello! Best bot is ready")
 
+@bot.command()
+async def add(ctx, *arr):
+    result = 0
+    for i in arr:
+        result += int(i)
+    await ctx.send(f"Sum = {result}")
+
 bot.run(BOT_TOKEN)
