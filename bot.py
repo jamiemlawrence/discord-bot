@@ -1,6 +1,7 @@
 import discord
 import os
 import requests
+import json
 from discord.ext import commands
 from dotenv import load_dotenv
 
@@ -24,7 +25,27 @@ def get_strava_access_token():
             'grant_type': 'refresh_token',
         }
     )
-    return response.json()['access_token']
+
+    # Check if the response contains an error
+    if response.status_code != 200:
+        print(f"Error getting access token: {response.status_code}, {response.text}")
+        return None
+
+    token_info = response.json()
+    print(f"Access token response: {token_info}")  # Debugging: Log the token response
+
+    # Save the new refresh token and access token in a file or environment variables if needed
+    new_refresh_token = token_info['refresh_token']
+    new_access_token = token_info['access_token']
+
+    # Optional: Store tokens in environment variables or a local file for future runs
+    with open('.strava_tokens.json', 'w') as token_file:
+        json.dump({
+            "access_token": new_access_token,
+            "refresh_token": new_refresh_token
+        }, token_file)
+
+    return new_access_token
 
 def get_latest_activity():
     access_token = get_strava_access_token()
