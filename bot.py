@@ -15,7 +15,13 @@ STRAVA_CLIENT_SECRET = os.getenv('STRAVA_CLIENT_SECRET')
 STRAVA_REFRESH_TOKEN = os.getenv('STRAVA_REFRESH_TOKEN')
 auth_url = "https://www.strava.com/api/v3/oauth/token"
 activities_url = "https://www.strava.com/api/v3/athlete/activities"
-
+payload = {
+    'client_id': STRAVA_CLIENT_ID,
+    'client_secret': STRAVA_CLIENT_SECRET,
+    'refresh_token': STRAVA_REFRESH_TOKEN,
+    'grant_type': "refresh_token",
+    'f': 'json'
+}
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 bot = commands.Bot(command_prefix='!', intents=discord.Intents.all())
@@ -26,14 +32,6 @@ async def on_ready():
     channel = bot.get_channel(CHANNEL_ID)
     message = 'Bot is online!'
     await channel.send(message)
-
-payload = {
-    'client_id': STRAVA_CLIENT_ID,
-    'client_secret': STRAVA_CLIENT_SECRET,
-    'refresh_token': STRAVA_REFRESH_TOKEN,
-    'grant_type': "refresh_token",
-    'f': 'json'
-}
 
 #request most updated access token
 res = requests.post(auth_url, data=payload, verify=False)
