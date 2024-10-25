@@ -56,12 +56,12 @@ async def strava(ctx):
     avg_speed = str(avg_speed)
 
     response = (
-        "Here is the latest activity!\n"
-        f"Title: {title}\n"
-        f"Type: {activity_type}\n"
-        f"Distance: {distance} miles\n"
-        f"Elevation Gain: {elevation} feet\n"
-        f"Average Speed: {avg_speed} mph"
+        "**Here is the latest activity!**\n"
+        f"**Title**: {title}\n"
+        f"**Type**: {activity_type}\n"
+        f"**Distance**: {distance} miles\n"
+        f"**Elevation Gain**: {elevation} feet\n"
+        f"**Average Speed**: {avg_speed} mph"
     )
 
     await ctx.send(response)
